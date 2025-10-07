@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ag Art - Tienda Creativa</title>
+
+  <style>
+    /* 🎨 Colores base */
+    :root {
+      --rosa-principal: #f8a5c2;
+      --rosa-suave: #fde2e4;
+      --rosa-oscuro: #e84393;
+      --texto: #333;
+      --blanco: #fff;
+    }
+
+    body {
+      font-family: "Poppins", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--rosa-suave);
+      color: var(--texto);
+    }
+
+    header {
+      background-color: var(--rosa-oscuro);
+      color: var(--blanco);
+      text-align: center;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      letter-spacing: 2px;
+    }
+
+    nav {
+      background-color: var(--rosa-principal);
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: var(--blanco);
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--rosa-oscuro);
+      background-color: var(--blanco);
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+
+    main {
+      padding: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: var(--rosa-oscuro);
+      border-bottom: 2px solid var(--rosa-oscuro);
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .product {
+      background-color: var(--blanco);
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 15px;
+      width: 220px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .product:hover {
+      transform: scale(1.05);
+    }
+
+    .product img {
+      border-radius: 10px;
+      width: 100%;
+      height: auto;
+    }
+
+    footer {
+      background-color: var(--rosa-oscuro);
+      color: var(--blanco);
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+
+    footer a {
+      color: var(--blanco);
+      text-decoration: underline;
+      margin: 0 10px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header>
+    <h1>Ag Art</h1>
+    <p>Tienda Creativa de Productos Personalizados</p>
+  </header>
+
+  <!-- Menú -->
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#productos">Productos</a>
+    <a href="#quienes-somos">Quiénes somos</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <!-- Sección de inicio -->
+  <main>
+    <section id="inicio">
+      <h2>Bienvenida a Ag Art 🌸</h2>
+      <p>Explora nuestros productos únicos hechos con amor y creatividad.</p>
+      <img src="images/banner.jpg" alt="Banner Ag Art" width="80%">
+    </section>
+<a href="catalogo.html" style="background-color:#e84393; color:white; padding:10px 20px; border-radius:10px; text-decoration:none;">Ver Catálogo</a>
+
+    <!-- Productos -->
+    <section id="productos">
+      <h2>Productos Destacados</h2>
+      <div class="products">
+        <div class="product">
+          <img src="images/producto1.jpg" alt="Case para celular">
+          <h3>Case para celular</h3>
+          <p>$40.000</p>
+        </div>
+
+        <div class="product">
+          <img src="images/producto2.jpg" alt="Cuello 2025">
+          <h3>Cuello 2025</h3>
+          <p>$45.000</p>
+        </div>
+
+        <div class="product">
+          <img src="images/producto3.jpg" alt="Cartel Divine Love">
+          <h3>Cartel Divine Love</h3>
+          <p>$120.000</p>
+        </div>
+
+
+    <!-- Quiénes somos -->
+    <section id="quienes-somos">
+      <h2>Quiénes somos</h2>
+      <p>Ag Art es una tienda creativa que ofrece productos personalizados para inspirar y alegrar tu día. 💕</p>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <p>📧 Email:  Anggygonzalez95@gmail.com</p>
+      <p>💬 WhatsApp: +57 3197681678</p>
+    </section>
+  </main>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>&copy; 2025 Ag Art - Todos los derechos reservados</p>
+    <p>
+      <a href="politica-privacidad.html">Política de privacidad</a>
+      <a href="terminos-condiciones.html">Términos y Condiciones</a>
+    </p>
+  </footer>
+
+</body>
+</html>

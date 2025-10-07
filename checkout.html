@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Ag Art</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #ffe6f2;
+      color: #5a0033;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #e84393;
+      color: white;
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+
+    .carrito {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      text-align: left;
+    }
+
+    .producto {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #f5a9c5;
+      padding: 10px 0;
+    }
+
+    .producto img {
+      width: 60px;
+      border-radius: 10px;
+    }
+
+    .producto h3 {
+      flex: 1;
+      margin-left: 15px;
+      color: #e84393;
+    }
+
+    .eliminar {
+      background-color: #e84393;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .eliminar:hover {
+      background-color: #c2185b;
+    }
+
+    .total {
+      text-align: right;
+      font-weight: bold;
+      color: #c2185b;
+      margin-top: 15px;
+    }
+
+    /* --- Formulario de compra --- */
+    form {
+      background-color: white;
+      width: 90%;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    form label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #b0266b;
+    }
+
+    form input, form select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #f5a9c5;
+      border-radius: 8px;
+    }
+
+    .btn-finalizar {
+      background-color: #e84393;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .btn-finalizar:hover {
+      background-color: #c2185b;
+    }
+
+    .mensaje-final {
+      display: none;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .mensaje-final img {
+      width: 150px;
+      margin-top: 20px;
+    }
+
+    footer {
+      background-color: #e84393;
+      color: white;
+      padding: 15px;
+      margin-top: 40px;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🛍️ Finalizar Compra</h1>
+  </header>
+
+  <section class="carrito" id="carrito"></section>
+
+  <form id="formCompra">
+    <h2 style="text-align:center; color:#e84393;">Formulario de Compra 💕</h2>
+
+    <label for="nombre">Nombre completo:</label>
+    <input type="text" id="nombre" required>
+
+    <label for="direccion">Dirección de envío:</label>
+    <input type="text" id="direccion" required>
+
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" required>
+
+    <label for="pago">Método de pago:</label>
+    <select id="pago" required>
+      <option value="">Selecciona...</option>
+      <option value="tarjeta">Tarjeta de crédito o débito</option>
+      <option value="nequi">Nequi</option>
+      <option value="daviplata">Daviplata</option>
+      <option value="efectivo">Pago contra entrega</option>
+    </select>
+
+    <button type="submit" class="btn-finalizar">Finalizar Compra</button>
+  </form>
+
+  <div class="mensaje-final" id="mensajeFinal">
+    <h2>🎉 ¡Gracias por tu compra en AG ART! 💖</h2>
+    <p>Tu pedido ha sido registrado exitosamente.</p>
+    <img src="images/final.jpg" alt="Gracias por tu compra">
+    <br>
+    <a href="catalogo.html" class="btn-finalizar">🏠 Volver al catálogo</a>
+  </div>
+
+  <footer>
+    © 2025 Ag Art · <a href="politica.html">Política de privacidad</a> · <a href="terminos.html">Términos y condiciones</a>
+  </footer>
+
+  <script>
+    // Mostrar productos guardados en el carrito
+    function mostrarCarrito() {
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      const contenedor = document.getElementById("carrito");
+      contenedor.innerHTML = "";
+
+      if (carrito.length === 0) {
+        contenedor.innerHTML = "<p>Tu carrito está vacío 💔</p>";
+        return;
+      }
+
+      carrito.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("producto");
+        div.innerHTML = `
+          <img src="${item.imagen}" alt="${item.nombre}">
+          <h3>${item.nombre}</h3>
+          <p>$${item.precio.toLocaleString()}</p>
+          <button class="eliminar" onclick="eliminarProducto(${index})">Eliminar</button>
+        `;
+        contenedor.appendChild(div);
+      });
+
+      const total = carrito.reduce((sum, item) => sum + item.precio, 0);
+      const totalP = document.createElement("p");
+      totalP.classList.add("total");
+      totalP.textContent = "Total: $" + total.toLocaleString();
+      contenedor.appendChild(totalP);
+    }
+
+    // Eliminar un solo producto
+    function eliminarProducto(index) {
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      carrito.splice(index, 1);
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      mostrarCarrito();
+    }
+
+    // Finalizar compra y mostrar mensaje con imagen
+    document.getElementById("formCompra").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      localStorage.removeItem("carrito");
+      document.querySelector(".carrito").style.display = "none";
+      document.getElementById("formCompra").style.display = "none";
+      document.getElementById("mensajeFinal").style.display = "block";
+    });
+
+    document.addEventListener("DOMContentLoaded", mostrarCarrito);
+  </script>
+
+</body>
+</html>

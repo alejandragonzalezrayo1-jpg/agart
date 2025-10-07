@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo - Ag Art</title>
+  <style>
+    /* --- Estilos generales y paleta rosada --- */
+    body {
+      font-family: "Poppins", Arial, sans-serif;
+      background-color: #ffe6f2; /* Fondo rosado suave */
+      text-align: center;
+      color: #5a0033;
+      margin: 0;
+    }
+
+    header {
+      text-align: center;
+      background-color: #e84393;
+      color: white;
+      padding: 20px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    /* Título con fondo blanco (resalta sobre el rosado) */
+    header h1 {
+      color: #d63384;
+      background-color: white;
+      display: inline-block;
+      padding: 10px 25px;
+      border-radius: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin: 0;
+    }
+
+    /* Botón / contador carrito en header */
+    .botonCarrito {
+      display: inline-block;
+      background-color: #d63384;
+      color: white;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-left: 12px;
+    }
+    #carrito {
+      display: inline-block;
+      background-color: white;
+      color: #e84393;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: bold;
+      margin-left: 12px;
+      cursor: pointer;
+    }
+
+    /* Catálogo (grid responsivo) */
+    .catalogo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      padding: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .producto {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.18s;
+      padding-bottom: 12px;
+    }
+    .producto:hover { transform: translateY(-6px); }
+
+    .producto img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display:block;
+    }
+
+    .producto h3 { color: #b0266b; margin: 12px 8px 6px; font-size: 1rem; }
+    .producto p { margin: 6px 0; color: #5a0033; font-weight: 600; }
+
+    .producto button {
+      background-color: #d63384;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    .producto button:hover { background-color: #b0266b; }
+
+    footer {
+      text-align: center;
+      padding: 18px;
+      background-color: #e84393;
+      color: white;
+      margin-top: 30px;
+    }
+
+    /* --- Modal del carrito --- */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-contenido {
+      background: white;
+      width: 92%;
+      max-width: 520px;
+      border-radius: 16px;
+      padding: 18px;
+      color: #333;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .modal h2 { color: #e84393; text-align: center; margin-top: 6px; }
+    .cerrar {
+      position: absolute; top: 10px; right: 12px;
+      background: none; border: none; font-size: 1.4em; color: #e84393; cursor: pointer;
+    }
+    #listaCarrito p { margin: 8px 0; }
+    .total { font-weight: bold; color: #c2185b; margin-top: 8px; text-align: center; }
+    .btn-vaciar {
+      background-color: #e84393; color: white; border: none; padding: 10px 14px;
+      border-radius: 10px; cursor: pointer; display: block; margin: 12px auto 0;
+    }
+    .btn-vaciar:hover { background-color: #c2185b; }
+
+    /* mensaje temporal */
+    #mensaje {
+      display:none; position: fixed; top:20px; left:50%; transform:translateX(-50%);
+      background-color:#ffb6c1; color:#5a0033; padding:10px 18px; border-radius:10px;
+      font-weight:bold; box-shadow:0 5px 12px rgba(0,0,0,0.15); z-index:1100;
+    }
+
+    @media (max-width:480px) {
+      .producto img { height:150px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="mensaje"></div>
+
+  <header>
+    <h1>Catálogo Ag Art 💕</h1>
+    <a href="checkout.html" class="botonCarrito">Ver checkout</a>
+    <div id="carrito" onclick="abrirCarrito()">🛒 <span id="contador">0</span></div>
+  </header>
+
+  <section class="catalogo">
+    <div class="producto">
+      <img src="images/cuadro1.jpg" alt="Cuadro Good Vibes">
+      <h3>Cuadro de decoración Good Vibes (marco blanco)</h3>
+      <p>$85.000</p>
+      <button onclick="agregarCarrito('Cuadro Good Vibes', 85000, 'images/cuadro1.jpg')">Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <img src="images/cuadro2.jpg" alt="Pad mouse safe place">
+      <h3>Pad mouse Safe Place</h3>
+      <p>$20.000</p>
+      <button onclick="agregarCarrito('Pad mouse Safe Place', 20000, 'images/cuadro2.jpg')">Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <img src="images/cuadro3.jpg" alt="Camisa clasica orange">
+      <h3>Camisa clásica Orange</h3>
+      <p>$100.000</p>
+      <button onclick="agregarCarrito('Camisa clásica Orange', 100000, 'images/cuadro3.jpg')">Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <img src="images/cuadro4.jpg" alt="Mini frontbags">
+      <h3>Mini Frontbags</h3>
+      <p>$110.000</p>
+      <button onclick="agregarCarrito('Mini Frontbags', 110000, 'images/cuadro4.jpg')">Agregar al carrito</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Ag Art | <a href="politica-privacidad.html" style="color: white;">Política de Privacidad</a> | <a href="terminos-condiciones.html" style="color: white;">Términos y Condiciones</a></p>
+  </footer>
+
+  <!-- Modal del carrito -->
+  <div class="modal" id="modalCarrito" role="dialog" aria-hidden="true">
+    <div class="modal-contenido">
+      <button class="cerrar" onclick="cerrarCarrito()">✖</button>
+      <h2>🛍️ Tu carrito</h2>
+      <div id="listaCarrito"></div>
+      <p class="total" id="totalModal"></p>
+      <button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar carrito</button>
+      <div style="text-align:center; margin-top:12px;">
+        <a href="checkout.html" class="btn-vaciar" style="text-decoration:none; display:inline-block;">Ir a checkout</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'carrito';
+
+    // Agrega producto y guarda en localStorage
+    function agregarCarrito(nombre, precio, imagen) {
+      const carrito = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      // si el mismo producto (mismo nombre+imagen) ya está, aumentamos cantidad
+      const existente = carrito.find(i => i.nombre === nombre && i.imagen === imagen);
+      if (existente) {
+        existente.cantidad = (existente.cantidad || 1) + 1;
+      } else {
+        carrito.push({ nombre, precio, imagen, cantidad: 1 });
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(carrito));
+      actualizarContador();
+      mostrarMensaje(`"${nombre}" agregado al carrito 💕`);
+    }
+
+    // Actualiza contador visible
+    function actualizarContador() {
+      const carrito = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      const totalUnidades = carrito.reduce((s, it) => s + (it.cantidad || 1), 0);
+      const contador = document.getElementById('contador');
+      if (contador) contador.textContent = totalUnidades;
+    }
+
+    // Mostrar modal y lista
+    function abrirCarrito() {
+      document.getElementById('modalCarrito').style.display = 'flex';
+      mostrarCarritoModal();
+    }
+
+    function cerrarCarrito() {
+      document.getElementById('modalCarrito').style.display = 'none';
+    }
+
+    function mostrarCarritoModal() {
+      const lista = document.getElementById('listaCarrito');
+      const totalEl = document.getElementById('totalModal');
+      const carrito = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      lista.innerHTML = '';
+      let suma = 0;
+      if (carrito.length === 0) {
+        lista.innerHTML = '<p>Tu carrito está vacío 😢</p>';
+        totalEl.textContent = '';
+        return;
+      }
+      carrito.forEach((item, index) => {
+        const subtotal = (item.precio || 0) * (item.cantidad || 1);
+        suma += subtotal;
+        const fila = document.createElement('div');
+        fila.style.display = 'flex';
+        fila.style.gap = '10px';
+        fila.style.alignItems = 'center';
+        fila.style.marginBottom = '10px';
+        fila.innerHTML = `
+          <img src="${item.imagen}" alt="${item.nombre}" style="width:72px; height:72px; object-fit:cover; border-radius:8px;">
+          <div style="text-align:left; flex:1;">
+            <strong>${item.nombre}</strong><br>
+            <small>Cantidad: ${item.cantidad}</small>
+          </div>
+          <div style="text-align:right;">
+            <div>$${subtotal.toLocaleString('es-CO')}</div>
+            <button onclick="eliminarItem(${index})" style="background:#d63384;color:#fff;border:none;padding:6px;border-radius:8px;cursor:pointer;margin-top:6px;">Eliminar 💔</button>
+          </div>
+        `;
+        lista.appendChild(fila);
+      });
+      totalEl.textContent = `Total: $${suma.toLocaleString('es-CO')} COP`;
+    }
+
+    function eliminarItem(index) {
+      const carrito = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      const eliminado = carrito.splice(index, 1)[0];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(carrito));
+      actualizarContador();
+      mostrarCarritoModal();
+      mostrarMensaje(`"${eliminado.nombre}" eliminado 💔`);
+    }
+
+    function vaciarCarrito() {
+      localStorage.removeItem(STORAGE_KEY);
+      actualizarContador();
+      mostrarCarritoModal();
+      mostrarMensaje('Carrito vaciado 💖');
+    }
+
+    function mostrarMensaje(texto) {
+      const msg = document.getElementById('mensaje');
+      msg.textContent = texto;
+      msg.style.display = 'block';
+      setTimeout(()=> msg.style.display = 'none', 2000);
+    }
+
+    // Inicializar contador al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      actualizarContador();
+    });
+  </script>
+</body>
+</html>
