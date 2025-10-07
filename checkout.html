@@ -3,243 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout - Ag Art</title>
+  <title>Finalizar Compra - Ag Art</title>
   <style>
     body {
       font-family: "Poppins", sans-serif;
       background-color: #ffe6f2;
-      color: #5a0033;
-      text-align: center;
       margin: 0;
       padding: 0;
+      color: #5a0033;
     }
 
     header {
       background-color: #e84393;
       color: white;
       padding: 20px;
+      text-align: center;
     }
 
     h1 {
       margin: 0;
-      font-size: 2em;
     }
 
-    .carrito {
-      background-color: white;
-      border-radius: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    table {
       width: 90%;
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 20px;
-      text-align: left;
-    }
-
-    .producto {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #f5a9c5;
-      padding: 10px 0;
-    }
-
-    .producto img {
-      width: 60px;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
       border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .producto h3 {
-      flex: 1;
-      margin-left: 15px;
-      color: #e84393;
+    th, td {
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
     }
 
-    .eliminar {
+    th {
+      background-color: #f8b6d4;
+      color: #5a0033;
+    }
+
+    button {
       background-color: #e84393;
       color: white;
       border: none;
       padding: 5px 10px;
       border-radius: 8px;
       cursor: pointer;
+      font-weight: bold;
     }
 
-    .eliminar:hover {
+    button:hover {
       background-color: #c2185b;
     }
 
-    .total {
-      text-align: right;
-      font-weight: bold;
-      color: #c2185b;
-      margin-top: 15px;
-    }
-
-    /* --- Formulario de compra --- */
-    form {
-      background-color: white;
+    .formulario {
       width: 90%;
-      max-width: 700px;
-      margin: 30px auto;
-      padding: 25px;
+      max-width: 500px;
+      background-color: white;
+      margin: 20px auto;
+      padding: 20px;
       border-radius: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      text-align: left;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    form label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-      color: #b0266b;
-    }
-
-    form input, form select {
+    input, select {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
-      border: 1px solid #f5a9c5;
-      border-radius: 8px;
+      border: 1px solid #f8b6d4;
+      border-radius: 10px;
     }
 
-    .btn-finalizar {
+    .finalizar {
       background-color: #e84393;
       color: white;
       border: none;
-      padding: 12px 20px;
+      padding: 12px;
       border-radius: 10px;
       cursor: pointer;
+      width: 100%;
+      font-size: 1em;
       font-weight: bold;
-      display: block;
-      margin: 0 auto;
     }
 
-    .btn-finalizar:hover {
+    .finalizar:hover {
       background-color: #c2185b;
     }
 
-    .mensaje-final {
-      display: none;
+    .gracias {
       text-align: center;
-      padding: 30px;
+      margin: 30px;
+      display: none;
     }
 
-    .mensaje-final img {
-      width: 150px;
-      margin-top: 20px;
+    .gracias img {
+      width: 200px;
+      margin-bottom: 20px;
     }
 
-    footer {
+    .volver {
       background-color: #e84393;
       color: white;
-      padding: 15px;
-      margin-top: 40px;
-    }
-
-    a {
-      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
       text-decoration: none;
+      font-weight: bold;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .volver:hover {
+      background-color: #c2185b;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>🛍️ Finalizar Compra</h1>
+    <h1>Finalizar Compra 💕</h1>
   </header>
 
-  <section class="carrito" id="carrito"></section>
+  <main>
+    <table id="cartTable">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody id="cartBody"></tbody>
+    </table>
 
-  <form id="formCompra">
-    <h2 style="text-align:center; color:#e84393;">Formulario de Compra 💕</h2>
+    <h3 id="total" style="text-align:center;"></h3>
 
-    <label for="nombre">Nombre completo:</label>
-    <input type="text" id="nombre" required>
+    <section class="formulario" id="formulario">
+      <h2>📝 Datos de Envío</h2>
+      <form id="checkoutForm">
+        <input type="text" id="nombre" placeholder="Nombre completo" required>
+        <input type="email" id="email" placeholder="Correo electrónico" required>
+        <input type="text" id="direccion" placeholder="Dirección de envío" required>
+        <select id="pago" required>
+          <option value="">Seleccione método de pago</option>
+          <option value="Tarjeta">Tarjeta de crédito o débito</option>
+          <option value="Nequi">Nequi</option>
+          <option value="Daviplata">Daviplata</option>
+          <option value="Contraentrega">Pago contraentrega</option>
+        </select>
+        <button type="submit" class="finalizar">Finalizar Compra 💖</button>
+      </form>
+    </section>
 
-    <label for="direccion">Dirección de envío:</label>
-    <input type="text" id="direccion" required>
-
-    <label for="email">Correo electrónico:</label>
-    <input type="email" id="email" required>
-
-    <label for="pago">Método de pago:</label>
-    <select id="pago" required>
-      <option value="">Selecciona...</option>
-      <option value="tarjeta">Tarjeta de crédito o débito</option>
-      <option value="nequi">Nequi</option>
-      <option value="daviplata">Daviplata</option>
-      <option value="efectivo">Pago contra entrega</option>
-    </select>
-
-    <button type="submit" class="btn-finalizar">Finalizar Compra</button>
-  </form>
-
-  <div class="mensaje-final" id="mensajeFinal">
-    <h2>🎉 ¡Gracias por tu compra en AG ART! 💖</h2>
-    <p>Tu pedido ha sido registrado exitosamente.</p>
-    <img src="images/final.jpg" alt="Gracias por tu compra">
-    <br>
-    <a href="catalogo.html" class="btn-finalizar">🏠 Volver al catálogo</a>
-  </div>
-
-  <footer>
-    © 2025 Ag Art · <a href="politica.html">Política de privacidad</a> · <a href="terminos.html">Términos y condiciones</a>
-  </footer>
+    <div class="gracias" id="gracias">
+      <img src="images/final.jpg" alt="Gracias por tu compra">
+      <h2>¡Gracias por tu compra! 💕</h2>
+      <a href="index.html" class="volver">Volver al inicio</a>
+    </div>
+  </main>
 
   <script>
-    // Mostrar productos guardados en el carrito
-    function mostrarCarrito() {
-      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-      const contenedor = document.getElementById("carrito");
-      contenedor.innerHTML = "";
+    function cargarCarrito() {
+      const cart = JSON.parse(localStorage.getItem("carrito")) || [];
+      const tbody = document.getElementById("cartBody");
+      tbody.innerHTML = "";
 
-      if (carrito.length === 0) {
-        contenedor.innerHTML = "<p>Tu carrito está vacío 💔</p>";
-        return;
-      }
+      let total = 0;
+      cart.forEach((item, index) => {
+        const subtotal = item.precio * item.cantidad;
+        total += subtotal;
 
-      carrito.forEach((item, index) => {
-        const div = document.createElement("div");
-        div.classList.add("producto");
-        div.innerHTML = `
-          <img src="${item.imagen}" alt="${item.nombre}">
-          <h3>${item.nombre}</h3>
-          <p>$${item.precio.toLocaleString()}</p>
-          <button class="eliminar" onclick="eliminarProducto(${index})">Eliminar</button>
+        tbody.innerHTML += `
+          <tr>
+            <td>${item.nombre}</td>
+            <td>$${item.precio.toLocaleString()}</td>
+            <td>
+              <button onclick="cambiarCantidad(${index}, -1)">➖</button>
+              ${item.cantidad}
+              <button onclick="cambiarCantidad(${index}, 1)">➕</button>
+            </td>
+            <td>$${subtotal.toLocaleString()}</td>
+            <td><button onclick="eliminarProducto(${index})">🗑️ Eliminar</button></td>
+          </tr>
         `;
-        contenedor.appendChild(div);
       });
 
-      const total = carrito.reduce((sum, item) => sum + item.precio, 0);
-      const totalP = document.createElement("p");
-      totalP.classList.add("total");
-      totalP.textContent = "Total: $" + total.toLocaleString();
-      contenedor.appendChild(totalP);
+      document.getElementById("total").textContent = `💰 Total: $${total.toLocaleString()}`;
     }
 
-    // Eliminar un solo producto
+    function cambiarCantidad(index, cambio) {
+      let cart = JSON.parse(localStorage.getItem("carrito")) || [];
+      cart[index].cantidad += cambio;
+      if (cart[index].cantidad <= 0) {
+        cart.splice(index, 1);
+      }
+      localStorage.setItem("carrito", JSON.stringify(cart));
+      cargarCarrito();
+    }
+
     function eliminarProducto(index) {
-      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-      carrito.splice(index, 1);
-      localStorage.setItem("carrito", JSON.stringify(carrito));
-      mostrarCarrito();
+      let cart = JSON.parse(localStorage.getItem("carrito")) || [];
+      cart.splice(index, 1);
+      localStorage.setItem("carrito", JSON.stringify(cart));
+      cargarCarrito();
     }
 
-    // Finalizar compra y mostrar mensaje con imagen
-    document.getElementById("formCompra").addEventListener("submit", function(e) {
-      e.preventDefault();
-
+    document.getElementById("checkoutForm").addEventListener("submit", function(event) {
+      event.preventDefault();
       localStorage.removeItem("carrito");
-      document.querySelector(".carrito").style.display = "none";
-      document.getElementById("formCompra").style.display = "none";
-      document.getElementById("mensajeFinal").style.display = "block";
+      document.getElementById("cartTable").style.display = "none";
+      document.getElementById("formulario").style.display = "none";
+      document.getElementById("total").style.display = "none";
+      document.getElementById("gracias").style.display = "block";
     });
 
-    document.addEventListener("DOMContentLoaded", mostrarCarrito);
+    document.addEventListener("DOMContentLoaded", cargarCarrito);
   </script>
 
 </body>
